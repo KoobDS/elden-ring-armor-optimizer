@@ -118,7 +118,7 @@ For Method 3, I am only considering 4-piece combinations but it is still the hig
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
 | **Total**                         |           | 21.7   | 51    | 11,961.27 |         |
 
----
+AND
 
 | Name                              | Slot       | Weight | Poise | Power     | Special |
 |-----------------------------------|-----------|--------|-------|-----------|---------|
@@ -140,7 +140,7 @@ These are the Method 1 optimal results for the base game (descending by total po
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
 | **Total**                         |           | 23.4   | 51    | 11,903.30 |         |
 
----
+AND
 
 | Name                              | Slot       | Weight | Poise | Power     | Special |
 |-----------------------------------|-----------|--------|-------|-----------|---------|
@@ -150,7 +150,7 @@ These are the Method 1 optimal results for the base game (descending by total po
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
 | **Total**                         |           | 23.4   | 51    | 11,867.57 |         |
 
----
+AND
 
 | Name                              | Slot       | Weight | Poise | Power     | Special |
 |-----------------------------------|-----------|--------|-------|-----------|---------|
