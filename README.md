@@ -100,9 +100,9 @@ For Method 2, the simplest method was to simply check if the highest-power piece
 
 |         | weight   | poise    | power    |
 |---------|---------|---------|---------|
-| **weight** | 1.000000 | 0.972875 | 0.847949 |
-| **poise**  | 0.972875 | 1.000000 | 0.902007 |
-| **power**  | 0.847949 | 0.902007 | 1.000000 |
+| weight | 1.000000 | 0.972875 | 0.847949 |
+| poise  | 0.972875 | 1.000000 | 0.902007 |
+| power  | 0.847949 | 0.902007 | 1.000000 |
 
 For Method 3, I am only considering 4-piece combinations but it is still the highest complexity. After generating all combinations, we must sum the weights, poise, and power within each  combination, check if poise >=51, find the power/weight ratio, and log it. When I removed unobtainable armor pieces and pieces with negative power scores (which do exist for a few pieces with negative stats), runtime was improved by 12%. These ran in 156 minutes for the whole game and 58 minutes for the base game. This is a long run-time and could be slightly improved with step reordering but checking the full search space was essential for avoiding sub-optimal results.
 
@@ -116,7 +116,7 @@ For Method 3, I am only considering 4-piece combinations but it is still the hig
 | Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
 | Ascetic's Wrist Guards            | Gauntlets | 1.1    | 2     | 1,004.49  |         |
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
-| **Total**                         |           | 21.7   | 51    | 11,961.27 |         |
+| Total                         |           | 21.7   | 51    | 11,961.27 |         |
 
 AND
 
@@ -126,7 +126,7 @@ AND
 | Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
 | Battlemage Manchettes             | Gauntlets | 1.1    | 2     | 956.80    |         |
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
-| **Total**                         |           | 21.7   | 51    | 11,913.58 |         |
+| Total                         |           | 21.7   | 51    | 11,913.58 |         |
 
 ---
 
@@ -138,7 +138,7 @@ These are the Method 1 optimal results for the base game (descending by total po
 | Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
 | Gold Bracelets                    | Gauntlets | 0.8    | 1     | 857.78    |         |
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
-| **Total**                         |           | 23.4   | 51    | 11,903.30 |         |
+| Total                         |           | 23.4   | 51    | 11,903.30 |         |
 
 AND
 
@@ -148,7 +148,7 @@ AND
 | Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
 | Battlemage Manchettes             | Gauntlets | 1.1    | 2     | 956.80    |         |
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
-| **Total**                         |           | 23.4   | 51    | 11,867.57 |         |
+| Total                         |           | 23.4   | 51    | 11,867.57 |         |
 
 AND
 
@@ -158,7 +158,7 @@ AND
 | Mausoleum Knight Armor (Altered)  | Chest     | 10.8   | 25    | 5,651.07  |         |
 | None                              |           |        |       |           |         |
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
-| **Total**                         |           | 23.4   | 51    | 11,396.53 |         |
+| Total                         |           | 23.4   | 51    | 11,396.53 |         |
 
 ---
 
@@ -170,7 +170,7 @@ AND
 | Verdigris Armor        | Chest     | 25.9   | 47    | 8,347.99  |         |
 | Verdigris Gauntlets    | Gauntlets | 8.6    | 10    | 2,203.98  |         |
 | Verdigris Greaves      | Legs      | 16.0   | 28    | 4,907.38  |         |
-| **Total**              |           | 62.8   | 99    | 18,716.39 |         |
+| Total              |           | 62.8   | 99    | 18,716.39 |         |
 
 ---
 
@@ -182,7 +182,7 @@ This is the Method 2 optimal result for the base game (this is the only optimal 
 | Bull-Goat Armor        | Chest     | 26.5   | 47    | 8,262.50  |         |
 | Bull-Goat Gauntlets    | Gauntlets | 8.8    | 10    | 2,149.51  |         |
 | Bull-Goat Greaves      | Legs      | 16.4   | 28    | 4,808.24  |         |
-| **Total**              |           | 63.0   | 100   | 18,269.95 |         |
+| Total              |           | 63.0   | 100   | 18,269.95 |         |
 
 ---
 
@@ -194,7 +194,7 @@ This is the Method 2 optimal result for the base game (this is the only optimal 
 | Crucible Tree Armor    | Chest     | 15.5   | 33    | 7,239.90  | Strengthens Aspects of the Crucible incantations |
 | Ascetic's Wrist Guards | Gauntlets | 1.1    | 2     | 1,004.49  |         |
 | Ronin's Greaves        | Legs      | 5.7    | 11    | 3,308.03  |         |
-| **Total**              |           | 23.3   | 51    | 13,036.39 |         |
+| Total              |           | 23.3   | 51    | 13,036.39 |         |
 
 ---
 
@@ -206,8 +206,16 @@ This is the Method 3 optimal result for the base game:
 | Crucible Tree Armor    | Chest     | 15.5   | 33    | 7,239.90  | Strengthens Aspects of the Crucible incantations |
 | Godskin Noble Bracelets | Gauntlets | 1.7    | 3     | 1,112.64  |         |
 | Ronin's Greaves        | Legs      | 5.7    | 11    | 3,308.03  |         |
-| **Total**              |           | 25.1   | 51    | 13,246.07 |         |
+| Total              |           | 25.1   | 51    | 13,246.07 |         |
 
 ---
 
 ## Discussion
+
+These results are very interesting:
+
+Method 1 was able to find two 51 poise armor sets at only 21.7 weight units each. The main drawback of those combinations is that the helm is obtained from the final boss of the expansion. For the base game, there were 3 with only 23.4 units each. These are exceptionally light. If you were to only consider full sets as in prior approaches, the lightest set with 51+ poise is 25.3 units (the Knight Set, which is considerably easier to obtain).
+
+Method 2's yield, the Greatjar (helm) and Verdigris chest, gauntlets, and legs, is extermely powerful and no-doubt the best armor combination possible if weight is no issue. However, this requires at least 40 Endurance (for a medium roll, meaning without reducing mobility). Method 2 for the base game only was the only approach to return a full 'in-tact' set, the Bull-Goat set. This is also a very strong set but also requires at least 40 Endurance.
+
+Method 3
