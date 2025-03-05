@@ -14,19 +14,19 @@ The data, as I downloaded it, has significant flaws that I fixed in this order i
 - Most importantly, use mapping to parse and extract important features from "damage negation" and "resistance" fields, which are in key-value pair dictionary lists.
 - Scale these important attributes from 0-100 where 100 is the best-in-class for a stat (as nominal values are not very relevant or co-meaningful).
 - Drop armor sets not obtainable in the game (only existing in game files).
-- Create "Power" columns, a major feature in this study (described below).
+- Create "power" columns, a major feature in this study (described below).
 - Drop and rename columns for clarity.
 
-To create the Power column, I first considered what factors were truly significant:
-- Weight: higher-weight armor requires leveling Endurance, diverting levels away from other important stats
-- Poise: this determines how many hits you can take without getting staggered; this is important as getting staggered can lead to hit-chaining and death
+To create the power column, I first considered what factors were truly significant:
+- weight: higher-weight armor requires leveling Endurance, diverting levels away from other important stats
+- poise: this determines how many hits you can take without getting staggered; this is important as getting staggered can lead to hit-chaining and death
   - With 11 poise, you can withstand a projectile; with 51 poise, you can withstand most small enemies' attacks; you need 101 poise to withstand a large enemy's attack, which is unreachable through armor alone
   - With that said, I consider 51 poise to be necessary with no additonal benefit to higher values
 - All damage negation stats and all infliction resistance stats, which control how much damage you negate by enemy damage type and how long it takes for negative status effects to build-up on you, respecively, but there are a total of 12 of those
 - Special effects, but I will not be considering those as they are situational and only benefit certain builds
 
 Considering this, it became clear that the features of interest were weight, poise, and a yet-to-be created synthesis of the damage negation and infliction resistance stats
-To create this synthesized variable, Power, I considered the main challenge of the game and where armor matters most, remembrance (main) bosses. In Elden Ring, there are 26 main bosses, each dealing certain damage types and inflictions.
+To create this synthesized variable, power, I considered the main challenge of the game and where armor matters most, remembrance (main) bosses. In Elden Ring, there are 26 main bosses, each dealing certain damage types and inflictions.
 As different damage types and inflictions occur at different frequencies, it should be considered that resistance to more common damage types and inflictions is more important. I therefore compiled the below table:
 
 | Main Boss                     | Damage Types                               | Inflictions  |
@@ -78,7 +78,7 @@ Considering frequency of type/infliction amongst main bosses as a pure coefficie
 | focus        | 1                    |
 | vitality      | 1                    |
 
-Thus, the calculation for armor piece Power is below (remember, input features are scaled values):
+Thus, the calculation for armor piece power is below (remember, input features are scaled values):
 
 Power = 26 × Physical + 10 × Fire + 10 × Magic + 8 × Pierce + 8 × Strike + 7 × Holy + 7 × Slash + 6 × Robustness + 5 × Lightning + 3 × Immunity + Focus + Vitality
 
@@ -86,26 +86,117 @@ Power = 26 × Physical + 10 × Fire + 10 × Magic + 8 × Pierce + 8 × Strike + 
 
 As there is no one best armor combination for all players, I defined 3 methods for determining the best possible armor set and ran each for the full game and for the base game only, resulting in 6 different mathematically-derived answers.
 
-I considered common motivations to devise these methods (note: these do not give special consideration to PvP players, who may need higher Poise)
+I considered common motivations to devise these methods (note: these do not give special consideration to PvP players, who may need higher poise)
 
 Method 1. Lowest weight combination with 51+ poise: This is for minimizing stat investment while being able to withstand standard hits (good for low levels)
-Method 2. Highest total Power combination with 51+ poise: This finds the best armor combination in the game if weight is no issue (good for very high levels)
-Method 3. Best total Power/weight ratio of 4-piece combinations with 51+ poise (most optimal defensive return on level spend)
+Method 2. Highest total power combination with 51+ poise: This finds the best armor combination in the game if weight is no issue (good for very high levels)
+Method 3. Best total power/weight ratio of 4-piece combinations with 51+ poise (most optimal defensive return on level spend)
 
-As the total number of combinations of armor is a large search space, greedy search algorithms were considered, but I rightly expected heuristics to fail so instead built an optimized brute-force method. One counterintuitive example of heuristic failure includes one piece from the Method 1 winner barely being in the top-half of Poise/Weight ratio pieces, where Poise/Weight seems like the clear heuristic for finding the minimum weight for 51 poise (which has in-fact been used to find inoptimal combinations by community members previously).
+As the total number of combinations of armor is a large search space, greedy search algorithms were considered, but I rightly expected heuristics to fail so instead built an optimized brute-force method. One counterintuitive example of heuristic failure includes one piece from the Method 1 winner barely being in the top-half of poise/weight ratio pieces, where poise/weight seems like the clear heuristic for finding the minimum weight for 51 poise (which has in-fact been used to find inoptimal combinations by community members previously).
 
-For Method 1, I generated every combination of 2 or more pieces (as you need at least 2 pieces for 51 Poise), iterated throuygh every combination and checked if the poise requirement was met, and logged it if it was the lowest weight yet or in a tie for the same. This had surpisingly fast run time of 11 minutes for the full game and 4 minutes for the base game.
+For Method 1, I generated every combination of 2 or more pieces (as you need at least 2 pieces for 51 poise), iterated throuygh every combination and checked if the poise requirement was met, and logged it if it was the lowest weight yet or in a tie for the same. This had surpisingly fast run time of 11 minutes for the full game (with a 2-way tie) and 4 minutes for the base game (with a 3-way tie).
 
-For Method 2, the simplest method was to simply check if the highest-Power piece for each slot happened to combine for at least 51 Poise. It does, as poise, weight, and power are heavily correlated--correlation matrix shown below (as in, high weight pieces tend to have high poise and power). However, as an alternative, I also wrote the code to handle cases in which the highest Power combination didn't have 51+ poise, with both approaches having near-instant runtimes.
+For Method 2, the simplest method was to simply check if the highest-power piece for each slot happened to combine for at least 51 poise. It does, as poise, weight, and power are heavily correlated--correlation matrix shown below (as in, high weight pieces tend to have high poise and power). However, as an alternative, I also wrote the code to handle cases in which the highest power combination didn't have 51+ poise, with both approaches having near-instant runtimes.
 
-|         | Weight   | Poise    | Power    |
+|         | weight   | poise    | power    |
 |---------|---------|---------|---------|
-| **Weight** | 1.000000 | 0.972875 | 0.847949 |
-| **Poise**  | 0.972875 | 1.000000 | 0.902007 |
-| **Power**  | 0.847949 | 0.902007 | 1.000000 |
+| **weight** | 1.000000 | 0.972875 | 0.847949 |
+| **poise**  | 0.972875 | 1.000000 | 0.902007 |
+| **power**  | 0.847949 | 0.902007 | 1.000000 |
 
-For Method 3,
+For Method 3, I am only considering 4-piece combinations but it is still the highest complexity. After generating all combinations, we must sum the weights, poise, and power within each  combination, check if poise >=51, find the power/weight ratio, and log it. When I removed unobtainable armor pieces and pieces with negative power scores (which do exist for a few pieces with negative stats), runtime was improved by 12%. These ran in 156 minutes for the whole game and 58 minutes for the base game.
 
 ## Results
+
+Method 1, "Lowest weight combination with 51+ poise," found these optimal results for the full game (descending by total power for tie-breaker):
+
+| Name                              | Slot       | Weight | Poise | Power     | Special |
+|-----------------------------------|-----------|--------|-------|-----------|---------|
+| Circlet of Light                 | Helm      | 1.0    | 5     | 1,483.97  | +1 to Intelligence, Faith, and Arcane. Boosts the power of Miquella's Light |
+| Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
+| Ascetic's Wrist Guards            | Gauntlets | 1.1    | 2     | 1,004.49  |         |
+| Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
+| **Total**                         |           | 21.7   | 51    | 11,961.27 |         |
+
+---
+
+| Name                              | Slot       | Weight | Poise | Power     | Special |
+|-----------------------------------|-----------|--------|-------|-----------|---------|
+| Circlet of Light                 | Helm      | 1.0    | 5     | 1,483.97  | +1 to Intelligence, Faith, and Arcane. Boosts the power of Miquella's Light |
+| Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
+| Battlemage Manchettes             | Gauntlets | 1.1    | 2     | 956.80    |         |
+| Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
+| **Total**                         |           | 21.7   | 51    | 11,913.58 |         |
+
+
+These are the Method 1 optimal results for the base game (descending by total power for tie-breaker):
+
+| Name                              | Slot       | Weight | Poise | Power     | Special |
+|-----------------------------------|-----------|--------|-------|-----------|---------|
+| Omensmirk Mask                    | Helm      | 3.0    | 6     | 1,572.71  | +2 Strength |
+| Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
+| Gold Bracelets                    | Gauntlets | 0.8    | 1     | 857.78    |         |
+| Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
+| **Total**                         |           | 23.4   | 51    | 11,903.30 |         |
+
+---
+
+| Name                              | Slot       | Weight | Poise | Power     | Special |
+|-----------------------------------|-----------|--------|-------|-----------|---------|
+| Champion Headband                 | Helm      | 2.7    | 5     | 1,437.96  |         |
+| Fingerprint Armor (Altered)       | Chest     | 10.0   | 24    | 5,300.06  |         |
+| Battlemage Manchettes             | Gauntlets | 1.1    | 2     | 956.80    |         |
+| Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
+| **Total**                         |           | 23.4   | 51    | 11,867.57 |         |
+
+---
+
+| Name                              | Slot       | Weight | Poise | Power     | Special |
+|-----------------------------------|-----------|--------|-------|-----------|---------|
+| Omensmirk Mask                    | Helm      | 3.0    | 6     | 1,572.71  | +2 Strength |
+| Mausoleum Knight Armor (Altered)  | Chest     | 10.8   | 25    | 5,651.07  |         |
+| None                              |           |        |       |           |         |
+| Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
+| **Total**                         |           | 23.4   | 51    | 11,396.53 |         |
+
+Method 2, "Highest total power combination with 51+ poise," found this optimal result for the full game:
+
+| Name                    | Slot       | Weight | Poise | Power     | Special |
+|-------------------------|-----------|--------|-------|-----------|---------|
+| Greatjar               | Helm      | 12.3   | 14    | 3,257.04  | Increases the power of all thrown pots by 16% |
+| Verdigris Armor        | Chest     | 25.9   | 47    | 8,347.99  |         |
+| Verdigris Gauntlets    | Gauntlets | 8.6    | 10    | 2,203.98  |         |
+| Verdigris Greaves      | Legs      | 16.0   | 28    | 4,907.38  |         |
+| **Total**              |           | 62.8   | 99    | 18,716.39 |         |
+
+This is the Method 2 optimal result for the base game (this is the only optimal result with a full set):
+
+| Name                    | Slot       | Weight | Poise | Power     | Special |
+|-------------------------|-----------|--------|-------|-----------|---------|
+| Bull-Goat Helm         | Helm      | 11.3   | 15    | 3,049.70  |         |
+| Bull-Goat Armor        | Chest     | 26.5   | 47    | 8,262.50  |         |
+| Bull-Goat Gauntlets    | Gauntlets | 8.8    | 10    | 2,149.51  |         |
+| Bull-Goat Greaves      | Legs      | 16.4   | 28    | 4,808.24  |         |
+| **Total**              |           | 63.0   | 100   | 18,269.95 |         |
+
+Method 3, "Best total power/weight ratio of combinations with 51+ poise," found this optimal result for the full game:
+
+| Name                    | Slot       | Weight | Poise | Power     | Special |
+|-------------------------|-----------|--------|-------|-----------|---------|
+| Circlet of Light       | Helm      | 1.0    | 5     | 1,483.97  | +1 to Intelligence, Faith, and Arcane. Boosts the power of Miquella's Light |
+| Crucible Tree Armor    | Chest     | 15.5   | 33    | 7,239.90  | Strengthens Aspects of the Crucible incantations |
+| Ascetic's Wrist Guards | Gauntlets | 1.1    | 2     | 1,004.49  |         |
+| Ronin's Greaves        | Legs      | 5.7    | 11    | 3,308.03  |         |
+| **Total**              |           | 23.3   | 51    | 13,036.39 |         |
+
+This is the Method 3 optimal result for the base game
+
+| Name                    | Slot       | Weight | Poise | Power     | Special |
+|-------------------------|-----------|--------|-------|-----------|---------|
+| Marais Mask            | Helm      | 2.2    | 4     | 1,585.50  | +1 Arcane |
+| Crucible Tree Armor    | Chest     | 15.5   | 33    | 7,239.90  | Strengthens Aspects of the Crucible incantations |
+| Godskin Noble Bracelets | Gauntlets | 1.7    | 3     | 1,112.64  |         |
+| Ronin's Greaves        | Legs      | 5.7    | 11    | 3,308.03  |         |
+| **Total**              |           | 25.1   | 51    | 13,246.07 |         |
 
 ## Discussion
