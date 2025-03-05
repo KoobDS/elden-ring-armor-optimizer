@@ -108,7 +108,7 @@ For Method 3, I am only considering 4-piece combinations but it is still the hig
 
 ## Results
 
-Method 1, "Lowest weight combination with 51+ poise," found these optimal results for the full game (descending by total power for tie-breaker):
+**Method 1**, "Lowest weight combination with 51+ poise," found these optimal results for the full game (descending by total power for tie-breaker):
 
 | Name                              | Slot       | Weight | Poise | Power     | Special |
 |-----------------------------------|-----------|--------|-------|-----------|---------|
@@ -159,7 +159,7 @@ These are the Method 1 optimal results for the base game (descending by total po
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
 | **Total**                         |           | 23.4   | 51    | 11,396.53 |         |
 
-Method 2, "Highest total power combination with 51+ poise," found this optimal result for the full game:
+**Method 2**, "Highest total power combination with 51+ poise," found this optimal result for the full game:
 
 | Name                    | Slot       | Weight | Poise | Power     | Special |
 |-------------------------|-----------|--------|-------|-----------|---------|
@@ -179,7 +179,7 @@ This is the Method 2 optimal result for the base game (this is the only optimal 
 | Bull-Goat Greaves      | Legs      | 16.4   | 28    | 4,808.24  |         |
 | **Total**              |           | 63.0   | 100   | 18,269.95 |         |
 
-Method 3, "Best total power/weight ratio of combinations with 51+ poise," found this optimal result for the full game:
+**Method 3**, "Best total power/weight ratio of combinations with 51+ poise," found this optimal result for the full game:
 
 | Name                    | Slot       | Weight | Poise | Power     | Special |
 |-------------------------|-----------|--------|-------|-----------|---------|
