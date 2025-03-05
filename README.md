@@ -128,6 +128,7 @@ For Method 3, I am only considering 4-piece combinations but it is still the hig
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
 | **Total**                         |           | 21.7   | 51    | 11,913.58 |         |
 
+---
 
 These are the Method 1 optimal results for the base game (descending by total power for tie-breaker):
 
@@ -159,6 +160,8 @@ These are the Method 1 optimal results for the base game (descending by total po
 | Crucible Greaves                  | Legs      | 9.6    | 20    | 4,172.75  | 3.5% damage increase to Aspect of the Crucible Incantations |
 | **Total**                         |           | 23.4   | 51    | 11,396.53 |         |
 
+---
+
 **Method 2**, "Highest total power combination with 51+ poise," found this optimal result for the full game:
 
 | Name                    | Slot       | Weight | Poise | Power     | Special |
@@ -168,6 +171,8 @@ These are the Method 1 optimal results for the base game (descending by total po
 | Verdigris Gauntlets    | Gauntlets | 8.6    | 10    | 2,203.98  |         |
 | Verdigris Greaves      | Legs      | 16.0   | 28    | 4,907.38  |         |
 | **Total**              |           | 62.8   | 99    | 18,716.39 |         |
+
+---
 
 This is the Method 2 optimal result for the base game (this is the only optimal result with a full set):
 
@@ -179,6 +184,8 @@ This is the Method 2 optimal result for the base game (this is the only optimal 
 | Bull-Goat Greaves      | Legs      | 16.4   | 28    | 4,808.24  |         |
 | **Total**              |           | 63.0   | 100   | 18,269.95 |         |
 
+---
+
 **Method 3**, "Best total power/weight ratio of combinations with 51+ poise," found this optimal result for the full game:
 
 | Name                    | Slot       | Weight | Poise | Power     | Special |
@@ -189,6 +196,8 @@ This is the Method 2 optimal result for the base game (this is the only optimal 
 | Ronin's Greaves        | Legs      | 5.7    | 11    | 3,308.03  |         |
 | **Total**              |           | 23.3   | 51    | 13,036.39 |         |
 
+---
+
 This is the Method 3 optimal result for the base game:
 
 | Name                    | Slot       | Weight | Poise | Power     | Special |
@@ -198,5 +207,7 @@ This is the Method 3 optimal result for the base game:
 | Godskin Noble Bracelets | Gauntlets | 1.7    | 3     | 1,112.64  |         |
 | Ronin's Greaves        | Legs      | 5.7    | 11    | 3,308.03  |         |
 | **Total**              |           | 25.1   | 51    | 13,246.07 |         |
+
+---
 
 ## Discussion
