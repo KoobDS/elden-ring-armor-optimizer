@@ -79,14 +79,32 @@ Considering frequency of type/infliction amongst main bosses as a pure coefficie
 | vitality      | 1                    |
 
 Thus, the calculation for armor piece Power is below (remember, input features are scaled values):
+
 Power = 26 × Physical + 10 × Fire + 10 × Magic + 8 × Pierce + 8 × Strike + 7 × Holy + 7 × Slash + 6 × Robustness + 5 × Lightning + 3 × Immunity + Focus + Vitality
 
 ### Defining and Implementing Methods
 
+As there is no one best armor combination for all players, I defined 3 methods for determining the best possible armor set and ran each for the full game and for the base game only, resulting in 6 different mathematically-derived answers.
 
+I considered common motivations to devise these methods (note: these do not give special consideration to PvP players, who may need higher Poise)
 
+Method 1. Lowest weight combination with 51+ poise: This is for minimizing stat investment while being able to withstand standard hits (good for low levels)
+Method 2. Highest total Power combination with 51+ poise: This finds the best armor combination in the game if weight is no issue (good for very high levels)
+Method 3. Best total Power/weight ratio of 4-piece combinations with 51+ poise (most optimal defensive return on level spend)
 
+As the total number of combinations of armor is a large search space, greedy search algorithms were considered, but I rightly expected heuristics to fail so instead built an optimized brute-force method. One counterintuitive example of heuristic failure includes one piece from the Method 1 winner barely being in the top-half of Poise/Weight ratio pieces, where Poise/Weight seems like the clear heuristic for finding the minimum weight for 51 poise (which has in-fact been used to find inoptimal combinations by community members previously).
 
+For Method 1, I generated every combination of 2 or more pieces (as you need at least 2 pieces for 51 Poise), iterated throuygh every combination and checked if the poise requirement was met, and logged it if it was the lowest weight yet or in a tie for the same. This had surpisingly fast run time of 11 minutes for the full game and 4 minutes for the base game.
+
+For Method 2, the simplest method was to simply check if the highest-Power piece for each slot happened to combine for at least 51 Poise. It does, as poise, weight, and power are heavily correlated--correlation matrix shown below (as in, high weight pieces tend to have high poise and power). However, as an alternative, I also wrote the code to handle cases in which the highest Power combination didn't have 51+ poise, with both approaches having near-instant runtimes.
+
+|         | Weight   | Poise    | Power    |
+|---------|---------|---------|---------|
+| **Weight** | 1.000000 | 0.972875 | 0.847949 |
+| **Poise**  | 0.972875 | 1.000000 | 0.902007 |
+| **Power**  | 0.847949 | 0.902007 | 1.000000 |
+
+For Method 3,
 
 ## Results
 
