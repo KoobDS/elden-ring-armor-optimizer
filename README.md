@@ -79,10 +79,9 @@ Considering frequency of type/infliction amongst main bosses as a pure coefficie
 | vitality      | 1                    |
 
 Thus, the calculation for armor piece Power is below:
-\[
+$$
 \text{Power} = 26 \times \text{Physical} + 10 \times \text{Fire} + 10 \times \text{Magic} + 8 \times \text{Pierce} + 8 \times \text{Strike} + 7 \times \text{Holy} + 7 \times \text{Slash} + 6 \times \text{Robustness} + 5 \times \text{Lightning} + 3 \times \text{Immunity} + \text{Focus} + \text{Vitality}
-\]
-
+$$
 
 ### Defining and Implementing Methods
 
