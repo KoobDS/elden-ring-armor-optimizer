@@ -108,7 +108,7 @@ For Method 3, I am only considering 4-piece combinations, but it is still the hi
 
 ## Results
 
-**Method 1**, "Lowest weight combination with 51+ poise," found these optimal results for the full game (descending by total power for tiebreaker):
+**Method 1**, "Lowest weight combination with 51+ poise," found these optimal results for the full game (tied combinations in descending order by total power):
 
 | Name                              | Slot       | Weight | Poise | Power     | Special |
 |-----------------------------------|-----------|--------|-------|-----------|---------|
@@ -130,7 +130,7 @@ AND
 
 ---
 
-These are the Method 1 optimal results for the base game (descending by total power for tiebreaker):
+These are the Method 1 optimal results for the base game (tied combinations in descending order by total power):
 
 | Name                              | Slot       | Weight | Poise | Power     | Special |
 |-----------------------------------|-----------|--------|-------|-----------|---------|
@@ -218,13 +218,13 @@ To better illustrate the relationship between weight and power, the scatter plot
 
 ## Discussion
 
-These results are very interesting:
+These results provide meaningful and interesting insights into armor optimization:
 
 Method 1 was able to find two 51 poise armor sets at only 21.7 weight units each. The main drawback of those combinations is that the helm is obtained from the final boss of the expansion. For the base game, there were 3 sets found with only 23.4 units each. These are exceptionally light. If you were to only consider full sets as in prior approaches, the lightest set with 51+ poise is 25.3 units (the Knight Set, which is admittedly considerably easier to obtain).
 
 Method 2's yield, the Greatjar (helm) and Verdigris chest, gauntlets, and legs, is extremely powerful and no-doubt the best armor combination possible if weight is of no issue. However, this requires at least 40 Endurance (for a medium roll, meaning without reducing mobility). Method 2 for the base game was the only approach to return a full 'in-tact' set, the Bull-Goat set. This is also a very strong set but also requires at least 40 Endurance.
 
-Method 3 is my favorite approach as it balances the need of high damage and infliction resistance with the need to minimize weight and also to have at least 51 poise. In the full game, we found Circlet of Light, Crucible Tree Armor, Ascetic's Wrist Guards, and Ronin's Greaves. For only 23.3 weight units, this is 69.7% as much power as the most powerful set in the game, while requiring as little as 0 Endurance investment. For the base game, we found Marais Mask, Crucible Tree Armor, Godskin Noble Bracelets, and Ronin's Greaves. For only 25.1 weight units, this is 72.5% as powerful as the most powerful base game combination, also requiring as little as 0 Endurance leveling rather than 40 Endurance.
+Method 3 is my preferred approach as it balances the need of high damage and infliction resistance with the need to minimize weight and also to have at least 51 poise. In the full game, we found Circlet of Light, Crucible Tree Armor, Ascetic's Wrist Guards, and Ronin's Greaves. For only 23.3 weight units, this is 69.7% as much power as the most powerful set in the game, while requiring as little as 0 Endurance investment. For the base game, we found Marais Mask, Crucible Tree Armor, Godskin Noble Bracelets, and Ronin's Greaves. For only 25.1 weight units, this is 72.5% as powerful as the most powerful base game combination, also requiring as little as 0 Endurance leveling rather than 40 Endurance.
 
 The Elden Ring Wiki also took a stab at an approach similar to this (though their exact method was not outlined). Their finding is below (with an accompanying table showing the set's stats formatted as above):
 
