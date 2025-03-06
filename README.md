@@ -84,7 +84,7 @@ Power = 26 × Physical + 10 × Fire + 10 × Magic + 8 × Pierce + 8 × Strike + 
 
 ### Defining and Implementing Methods
 
-As there is no one best armor combination for all players, I defined 3 methods for determining the best possible armor set and ran each for the full game and for the base game only, resulting in 6 different mathematically derived answers. I considered common motivations to devise these methods (note: these do not give special consideration to PvP players, who may need higher poise).
+As there is no one best armor combination for all players, I defined 3 methods in find_best.py for determining the best possible armor set and ran each for the full game and for the base game only, resulting in 6 different mathematically derived answers. I considered common motivations to devise these methods (note: these do not give special consideration to PvP players, who may need higher poise).
 
 Method 1. Lowest weight combination with 51+ poise: This is for minimizing stat investment while being able to withstand standard hits (good for low levels).
 
