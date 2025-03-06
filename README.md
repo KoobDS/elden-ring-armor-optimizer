@@ -11,23 +11,23 @@ Using data originally compiled by eldenring.wiki.fextralife.com of armor attribu
 
 ### Data Cleaning and Feature Creation
 The data, as I downloaded it, has significant flaws that I fixed in this order in clean.py:
-- Most importantly, use mapping to parse and extract key features from "damage negation" and "resistance" fields, which are in key-value pair dictionary lists.
-- Scale these important attributes from 0-100 where 100 is the best-in-class for a stat (as nominal values are not truly relevant or co-meaningful).
-- Drop armor sets not obtainable in the game (only existing in game files).
-- Create "power" column, a major feature in this study (described below).
-- Drop and rename columns for clarity.
+- Most importantly, used mapping to parse and extract key features from "damage negation" and "resistance" fields, which are in key-value pair dictionary lists.
+- Scaled these important attributes from 0-100 where 100 is the best-in-class for a stat (as nominal values are not truly relevant or co-meaningful).
+- Dropped armor sets not obtainable in the game (only existing in game files).
+- Created "Power" column, a major feature in this study (described below).
+- Dropped and renamed columns for clarity.
 
-To create the power column, I first considered what factors were truly significant:
-- Weight: higher-weight armor requires leveling Endurance, diverting levels away from other important stats.
-- Poise: this determines how many hits you can take without getting staggered; this is important as getting staggered can lead to hit-chaining and death.
-  - With 11 poise, you can withstand a projectile; with 51 poise, you can withstand most small enemies' attacks; you need 101 poise to withstand a large enemy's attack, which is unreachable through armor alone.
+To create the power column, I first considered which factors were truly significant:
+- Weight: Higher-weight armor requires leveling Endurance, diverting levels away from other important stats.
+- Poise: This determines how many hits you can take without getting staggered; this is important as getting staggered can lead to hit-chaining and death.
+  - With 11 poise, you can withstand a projectile; with 51 poise, you can withstand most small enemies' attacks; you need 101 poise to withstand a large enemy's attack, which is unachievable through armor alone.
   - With that said, I consider 51 poise to be necessary with no additional benefit to higher values.
-- All damage negation stats and all infliction resistance stats, which control how much damage you negate by enemy damage type and how long it takes for negative status effects to build-up on you, respectively, but there are a total of 12 of those.
+- All damage negation stats and all infliction resistance stats, which control how much damage you negate by enemy damage type and how long it takes for negative status effects to build-up on you, respectively. There are a total of 12 of these.
 - Special effects, but I will not be considering those as they are situational and only benefit certain builds.
 
-Considering this, it became clear that the features of interest were weight, poise, and a yet-to-be created synthesis of the damage negation and infliction resistance stats.
+Considering this, it became clear that the features of interest were weight, poise, and a yet-to-be created synthesis variable of the damage negation and infliction resistance stats.
 
-To create this synthesized variable, power, I considered the main challenge of the game and where armor matters most, remembrance (main) bosses. In Elden Ring, there are 26 main bosses, each dealing certain damage types and inflictions. As different damage types and inflictions occur at different frequencies, it should be considered that resistance to more common damage types and inflictions is more important. I therefore compiled the table below:
+To create this synthesized variable, Power, I considered the main challenge of the game and where armor matters most, remembrance (main) bosses. In Elden Ring, there are 26 main bosses, each dealing certain damage types and inflictions. As different damage types and inflictions occur at different frequencies, it should be considered that resistance to more common damage types and inflictions is more important. I therefore compiled the table below:
 
 | Main Boss                     | Damage Types                               | Inflictions  |
 |--------------------------------|------------------------------------------|--------------|
@@ -104,7 +104,7 @@ For Method 2, the simplest method was to simply check if the highest-power piece
 | poise  | 0.972875 | 1.000000 | 0.902007 |
 | power  | 0.847949 | 0.902007 | 1.000000 |
 
-For Method 3, I am only considering 4-piece combinations, but it is still the highest complexity. After generating all combinations, we must sum the weights, poise, and power within each  combination, check if poise >=51, find the power/weight ratio, and log it. When I removed unobtainable armor pieces and pieces with negative power scores (which do exist for a few pieces with negative stats), runtime was improved by 12%. These ran in 156 minutes for the whole game and 58 minutes for the base game. This is a long run-time and could be slightly improved with step reordering but checking the full search space was essential for avoiding sub-optimal results.
+For Method 3, I am only considering 4-piece combinations, but it is still the highest complexity. After generating all combinations, we must sum the weights, poise, and power within each combination, check if poise >=51, find the power/weight ratio, and log it. When I removed unobtainable armor pieces and pieces with negative power scores (which do exist for a few pieces with negative stats), runtime was improved by 12%. These ran in 156 minutes for the whole game and 58 minutes for the base game. This is a long run-time and could be slightly improved with step reordering but checking the full search space was essential for avoiding sub-optimal results.
 
 ## Results
 
@@ -224,7 +224,7 @@ Method 1 was able to find two 51 poise armor sets at only 21.7 weight units each
 
 Method 2's yield, the Greatjar (helm) and Verdigris chest, gauntlets, and legs, is extremely powerful and no-doubt the best armor combination possible if weight is of no issue. However, this requires at least 40 Endurance (for a medium roll, meaning without reducing mobility). Method 2 for the base game was the only approach to return a full 'in-tact' set, the Bull-Goat set. This is also a very strong set but also requires at least 40 Endurance.
 
-Method 3 is my preferred approach as it balances the need of high damage and infliction resistance with the need to minimize weight and also to have at least 51 poise. In the full game, we found Circlet of Light, Crucible Tree Armor, Ascetic's Wrist Guards, and Ronin's Greaves. For only 23.3 weight units, this is 69.7% as much power as the most powerful set in the game, while requiring as little as 0 Endurance investment. For the base game, we found Marais Mask, Crucible Tree Armor, Godskin Noble Bracelets, and Ronin's Greaves. For only 25.1 weight units, this is 72.5% as powerful as the most powerful base game combination, also requiring as little as 0 Endurance leveling rather than 40 Endurance.
+Method 3 is my preferred approach as it balances the need of high damage and infliction resistance with the need to minimize weight and also to have at least 51 poise. In the full game, we found Circlet of Light, Crucible Tree Armor, Ascetic's Wrist Guards, and Ronin's Greaves. For only 23.3 weight units, this is 69.7% as powerful as the most powerful set in the game, while requiring as little as 0 Endurance investment. For the base game, we found Marais Mask, Crucible Tree Armor, Godskin Noble Bracelets, and Ronin's Greaves. For only 25.1 weight units, this is 72.5% as powerful as the most powerful base game combination, also requiring as little as 0 Endurance leveling rather than 40 Endurance.
 
 The Elden Ring Wiki also took a stab at an approach similar to this (though their exact method was not outlined). Their finding is below (with an accompanying table showing the set's stats formatted as above):
 
@@ -238,9 +238,9 @@ The Elden Ring Wiki also took a stab at an approach similar to this (though thei
 | Crucible Greaves        | Legs      | 9.6    | 20    | 4,172.75 | 3.5% damage increase to Aspect of the Crucible Incantations |
 |                          |          | 24.2 | 51 | 12,031.88 |                                             |
 
-Our optimal result is not only 0.9 weight units lighter, but also 8.3% more powerful. Comparing the Wiki's set to our base game optimal set, we are 0.9 weight units heavier but 10.0% more powerful.
+Our optimal result from Method 3 is not only 0.9 weight units lighter, but also 8.3% more powerful. Comparing the Wiki's set to our base game optimal set, we are 0.9 weight units heavier but 10.0% more powerful.
 
-As outlined before, most prior approaches exclusively considered full sets. The most popular of these, a YouTube video with over 1.4 million views at the time of this writing, found the Tree Sentinel set to be #1 set in the game. That set's chart is below.
+As outlined before, most prior approaches exclusively considered full sets. The most popular of these, a YouTube video with over 1.4 million views at the time of this writing, found the Tree Sentinel set to be the #1 set in the game. That set's chart is below.
 
 | Name                    | Slot      | Weight | Poise | Power    | Special |
 |-------------------------|----------|--------|-------|----------|---------|
