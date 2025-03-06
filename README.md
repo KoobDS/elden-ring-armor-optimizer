@@ -210,6 +210,12 @@ This is the Method 3 optimal result for the base game:
 
 ---
 
+To better illustrate the relationship between weight and power, the scatter plot below shows all Elden Ring armor pieces, highlighting those selected by any of the 3 methods (full game or base game).
+
+![Weight vs. Power Scatter Plot](misc/scatter_plot.png)
+
+---
+
 ## Discussion
 
 These results are very interesting:
