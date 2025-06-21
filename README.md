@@ -10,7 +10,7 @@ Using data originally compiled by eldenring.wiki.fextralife.com of armor attribu
 ## Methodology
 
 ### Data Cleaning and Feature Creation
-The data, as I downloaded it, has significant flaws that I fixed in this order in clean.py:
+The data, as I extracted it, has significant flaws that I fixed in this order in clean.py:
 - Most importantly, used mapping to parse and extract key features from "damage negation" and "resistance" fields, which are in key-value pair dictionary lists.
 - Scaled these important attributes from 0-100 where 100 is the best-in-class for a stat (as nominal values are not truly relevant or co-meaningful).
 - Dropped armor sets not obtainable in the game (only existing in game files).
@@ -94,7 +94,7 @@ Method 3. Best total power/weight ratio of 4-piece combinations with 51+ poise (
 
 As the total number of combinations of armor is a large search space, greedy search algorithms were considered, but I rightly expected heuristics to fail so instead built an optimized brute-force method. One counterintuitive example of heuristic failure includes one piece from the Method 1 winner barely being in the top-half of poise/weight ratio pieces, where poise/weight seems like the clear heuristic for finding the minimum weight for 51 poise (which has in-fact been used to find non-optimal combinations by community members previously).
 
-For Method 1, I generated every combination of 2 or more pieces (as you need at least 2 pieces for 51 poise), iterated through every combination, checked if the poise requirement was met, and logged it if it was the lowest weight yet or in a tie for the same. This had surprisingly fast run time of 11 minutes for the full game (with a 2-way tie) and 4 minutes for the base game (with a 3-way tie).
+For Method 1, I generated every combination of 2 or more pieces (as you need at least 2 pieces for 51 poise), iterated through every combination, checked if the poise requirement was met, and logged it if it was the lowest weight yet or in a tie for the same. This had surprisingly fast run time of 11 minutes (all runtimes are on one CPU core) for the full game (with a 2-way tie) and 4 minutes for the base game (with a 3-way tie).
 
 For Method 2, the simplest method was to simply check if the highest-power piece for each slot happened to combine for at least 51 poise. It does, as poise, weight, and power are heavily correlated (as in, high weight pieces tend to have high poise and power)—correlation matrix shown below. However, as an alternative, I also wrote the code to handle cases in which the highest power combination didn't have 51+ poise, with both approaches having near-instant runtimes.
 
@@ -104,7 +104,7 @@ For Method 2, the simplest method was to simply check if the highest-power piece
 | poise  | 0.972875 | 1.000000 | 0.902007 |
 | power  | 0.847949 | 0.902007 | 1.000000 |
 
-For Method 3, I am only considering 4-piece combinations, but it is still the highest complexity. After generating all combinations, we must sum the weights, poise, and power within each combination, check if poise >=51, find the power/weight ratio, and log it. When I removed unobtainable armor pieces and pieces with negative power scores (which do exist for a few pieces with negative stats), runtime was improved by 12%. These ran in 156 minutes for the whole game and 58 minutes for the base game. This is a long run-time and could be slightly improved with step reordering but checking the full search space was essential for avoiding sub-optimal results.
+For Method 3, I am only considering 4-piece combinations, but it is still the highest complexity method (before clever improvements). After generating all combinations, we must sum the weights, poise, and power within each combination, check if poise >=51, find the power/weight ratio, and log it. When I removed unobtainable armor pieces and pieces with negative power scores (which do exist for a few pieces with negative stats), runtime was improved by 12%. However, clever step-reordering, as in filtering based on the 51 poise requirement before calculating total weight and power, alongside using attribute lookups instead of dictionary lookups, reduced runtime by a whopping 98%. Full-game runtime went from 156 minutes to 175 seconds and base game runtime went from 58 minutes to 74 seconds.
 
 ## Results
 
@@ -218,9 +218,9 @@ To better illustrate the relationship between weight and power, the scatter plot
 
 ## Discussion
 
-These results provide meaningful and interesting insights into armor optimization:
+These results provide meaningful and interesting insights into armor optimization.
 
-Method 1 was able to find two 51 poise armor sets at only 21.7 weight units each. The main drawback of those combinations is that the helm is obtained from the final boss of the expansion. For the base game, there were 3 sets found with only 23.4 units each. These are exceptionally light. If you were to only consider full sets as in prior approaches, the lightest set with 51+ poise is 25.3 units (the Knight Set, which is admittedly considerably easier to obtain).
+Method 1 was able to find two 51 poise armor sets at only 21.7 weight units each. The main drawback of those combinations is that the helm is obtained from the final boss of the expansion. For the base game, there were 3 sets found with only 23.4 units each. These are exceptionally light. If you were to only consider full sets, as in prior approaches, the lightest set with 51+ poise is 25.3 units (the Knight Set, which is admittedly considerably easier to obtain).
 
 Method 2's yield, the Greatjar (helm) and Verdigris chest, gauntlets, and legs, is extremely powerful and no-doubt the best armor combination possible if weight is of no issue. However, this requires at least 40 Endurance (for a medium roll, meaning without reducing mobility). Method 2 for the base game was the only approach to return a full 'in-tact' set, the Bull-Goat set. This is also a very strong set but also requires at least 40 Endurance.
 
@@ -253,3 +253,5 @@ As outlined before, most prior approaches exclusively considered full sets. The 
 Method 3's result is 21.7 units lighter while being 74.0% as powerful. While the two are hard to compare, I am fairly confident at least one of my 3 methods produces a better result for most players.
 
 **With that said, we have successfully found the mathematically optimal armor combinations for lowest weight, no weight restriction, and a balanced approach, and for the full game and base game for each of the 3 approaches.**
+
+Addendum: For examples of using these techniques for optimizing armor for specific playthroughs (with certain given pieces and/or weight constraints), see special_runs.py.
