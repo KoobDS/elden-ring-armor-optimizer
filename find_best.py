@@ -10,7 +10,7 @@ slot_categories = ["Helm", "Chest", "Gauntlets", "Legs"]
 armor_by_slot = {slot: df[df["Slot"] == slot].copy() for slot in slot_categories}
 
 # Define Method Selection
-METHOD = "3"  # Change to method, options: "1", "1b", "2", "2b", "3", "3b"
+METHOD = "3b"  # Change to method, options: "1", "1b", "2", "2b", "3", "3b"
 
 start_time = time.time() # to track runtime
 
@@ -105,31 +105,31 @@ elif METHOD in ["3", "3b"]:
     gauntlets = df[df["Slot"] == "Gauntlets"]
     legs = df[df["Slot"] == "Legs"]
 
-    for helm, chest, gauntlet, leg in product(helms.iterrows(), chests.iterrows(), gauntlets.iterrows(), legs.iterrows()):
-        helm, chest, gauntlet, leg = helm[1], chest[1], gauntlet[1], leg[1]
+    for helm, chest, gauntlet, leg in product(helms.itertuples(index=False), chests.itertuples(index=False), gauntlets.itertuples(index=False), legs.itertuples(index=False)): # Time save: itertuples instead of iterrows
 
-        total_weight = helm["Weight"] + chest["Weight"] + gauntlet["Weight"] + leg["Weight"]
-        total_poise = helm["Poise"] + chest["Poise"] + gauntlet["Poise"] + leg["Poise"]
-        total_power = helm["Power"] + chest["Power"] + gauntlet["Power"] + leg["Power"]
+        total_poise = helm.Poise + chest.Poise + gauntlet.Poise + leg.Poise
+        if total_poise < 51: # Time save (reordering to filter before all calculations)
+            continue
 
-        if total_poise >= 51:
-            power_weight_ratio = total_power / total_weight
+        total_weight = helm.Weight + chest.Weight + gauntlet.Weight + leg.Weight
+        total_power  = helm.Power  + chest.Power  + gauntlet.Power  + leg.Power
+        power_weight_ratio = total_power / total_weight
 
-            if power_weight_ratio > best_ratio:
-                best_ratio = power_weight_ratio
-                best_combos = [(helm, chest, gauntlet, leg)]
-            elif power_weight_ratio == best_ratio:
-                best_combos.append((helm, chest, gauntlet, leg))
+        if power_weight_ratio > best_ratio:
+            best_ratio = power_weight_ratio
+            best_combos = [(helm, chest, gauntlet, leg)]
+        elif power_weight_ratio == best_ratio:
+             best_combos.append((helm, chest, gauntlet, leg))
 
     end_time = time.time()
 
     if best_combos:
         print(f"Best 4-Piece Armor Combinations (51+ Poise) with Highest Power/Weight Ratio: {best_ratio:.4f} in {end_time - start_time:.2f} seconds")
-        for combo in best_combos:
+        for helm, chest, gauntlet, leg in best_combos:
             print("---")
-            print(f"- Helm: {combo[0]['Name']}")
-            print(f"- Chest: {combo[1]['Name']}")
-            print(f"- Gauntlets: {combo[2]['Name']}")
-            print(f"- Legs: {combo[3]['Name']}")
+            print(f"- Helm: {helm.Name}")
+            print(f"- Chest: {chest.Name}")
+            print(f"- Gauntlets: {gauntlet.Name}")
+            print(f"- Legs: {leg.Name}")
     else:
         print(f"No valid armor combination found with Poise >= 51 in {end_time - start_time:.2f} seconds.")
