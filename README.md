@@ -29,6 +29,8 @@ Considering this, it became clear that the features of interest were weight, poi
 
 To create this synthesized variable, Power, I considered the main challenge of the game and where armor matters most, remembrance (main) bosses. In Elden Ring, there are 26 main bosses, each dealing certain damage types and inflictions. As different damage types and inflictions occur at different frequencies, it should be considered that resistance to more common damage types and inflictions is more important. I therefore compiled the table below:
 
+<details>
+<summary>Click to expand</summary>
 | Main Boss                     | Damage Types                               | Inflictions  |
 |--------------------------------|------------------------------------------|--------------|
 | Godrick the Grafted           | standard, strike, fire                   |              |
@@ -57,12 +59,15 @@ To create this synthesized variable, Power, I considered the main challenge of t
 | Midra, Lord of Frenzied Flame | standard, pierce, fire, holy              | madness      |
 | Bayle the Dread               | standard, fire, lightning                 |              |
 | Radahn, Consort of Miquella   | standard, pierce, magic, fire, holy       | bleed        |
+</details>
 
 Stats affecting infliction resistances map to the inflictions as shown below:
 robustness: bleed and frostbite; immunity: scarlet rot and poison; vitality: death blight; focus: madness.
 
 Considering frequency of type/infliction amongst main bosses as a pure coefficient multiplier of importance, we get the table below:
 
+<details>
+<summary>Click to expand</summary>
 | Type/Infliction | Importance Multiplier |
 |-----------------|----------------------|
 | standard        | 26                   |
@@ -77,6 +82,7 @@ Considering frequency of type/infliction amongst main bosses as a pure coefficie
 | immunity      | 3                    |
 | focus        | 1                    |
 | vitality      | 1                    |
+</details>
 
 Thus, the calculation for armor piece power is below (remember, input features are scaled values):
 
@@ -255,3 +261,8 @@ Method 3's result is 21.7 units lighter while being 74.0% as powerful. While the
 **With that said, we have successfully found the mathematically optimal armor combinations for lowest weight, no weight restriction, and a balanced approach, and for the full game and base game for each of the 3 approaches.**
 
 Addendum: For examples of using these techniques for optimizing armor for specific playthroughs (with certain given pieces and/or weight constraints), see special_runs.py.
+
+General quick start:
+python -m pip install -r requirements.txt && python find_best.py
+OR
+python -m pip install -r requirements.txt && python special_runs.py
