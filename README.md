@@ -269,9 +269,9 @@ Method 3's result is 21.7 units lighter while being 74.0% as powerful. While the
 Addendum: For examples of using these techniques for optimizing armor for specific playthroughs (with certain given pieces and/or weight constraints), see special_runs.py.
 
 General quick start:
-
-python -m pip install -r requirements.txt && python find_best.py
-
-OR
-
-python -m pip install -r requirements.txt && python special_runs.py
+```bash
+python -m pip install -r requirements.txt
+python find_best.py
+# or
+python special_runs.py
+```
